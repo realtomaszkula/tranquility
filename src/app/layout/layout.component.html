@@ -1,10 +1,10 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #sidenav mode="over" opened="true" fixedInViewport>
+  <mat-sidenav #sidenav mode="over" fixedInViewport>
     Hello sidenav
   </mat-sidenav>
   <mat-sidenav-content>
     <tq-site-header (toggle)="sidenav.toggle()"></tq-site-header>
-    <tq-site-content>
+    <tq-site-content [@routingAnimation]="prepRouteState()">
       <ng-content></ng-content>
     </tq-site-content>
     <tq-site-footer></tq-site-footer>
