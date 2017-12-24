@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {
   MatToolbarModule,
   MatButtonModule,
   MatIconModule,
-  MatSidenavModule
+  MatSidenavModule,
 } from '@angular/material';
 
 import { LayoutComponent } from './layout.component';
@@ -17,19 +18,20 @@ import { SiteMenuComponent } from './site-menu/site-menu.component';
 @NgModule({
   imports: [
     CommonModule,
+    RouterModule,
     FlexLayoutModule,
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
-    MatSidenavModule
+    MatSidenavModule,
   ],
   declarations: [
     LayoutComponent,
     SiteHeaderComponent,
     SiteFooterComponent,
     SiteContentComponent,
-    SiteMenuComponent
+    SiteMenuComponent,
   ],
-  exports: [LayoutComponent]
+  exports: [LayoutComponent],
 })
 export class LayoutModule {}

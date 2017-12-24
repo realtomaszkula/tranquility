@@ -1,16 +1,25 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { RouterLinkActive } from '@angular/router';
+
+interface Link {
+  icon: string;
+  url: string;
+}
 
 @Component({
   selector: 'tq-site-footer',
   templateUrl: './site-footer.component.html',
   styleUrls: ['./site-footer.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiteFooterComponent implements OnInit {
+  links: Link[] = [
+    { url: '/page1', icon: 'star' },
+    { url: '/page2', icon: 'star' },
+    { url: '/page3', icon: 'star' },
+    { url: '/page4', icon: 'star' },
+  ];
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

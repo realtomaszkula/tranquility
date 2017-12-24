@@ -1,3 +1,7 @@
 :host {
   display: block;
 }
+
+button {
+  transition: flex-grow 100ms ease-in-out;
+}

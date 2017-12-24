@@ -1,8 +1,8 @@
 <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="center center">
-  <button mat-icon-button>
-    <mat-icon>star</mat-icon>
-  </button>
-  <button mat-icon-button>
-    <mat-icon>star</mat-icon>
-  </button>
+  <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-around center">
+    <button mat-icon-button [color]="routerLink.isActive ? 'accent' : 'none'" *ngFor="let link of links" [routerLink]="[link.url]"
+      routerLinkActive #routerLink="routerLinkActive" [style.flex-grow]="routerLink.isActive ? 3 : 1">
+      <mat-icon>{{ link.icon }} </mat-icon>
+    </button>
+  </mat-toolbar-row>
 </mat-toolbar>
