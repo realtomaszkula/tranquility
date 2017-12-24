@@ -1,3 +1,12 @@
-<p>
-  layout works!
-</p>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav mode="over" opened="true" fixedInViewport>
+    Hello sidenav
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <tq-site-header (toggle)="sidenav.toggle()"></tq-site-header>
+    <tq-site-content>
+      <ng-content></ng-content>
+    </tq-site-content>
+    <tq-site-footer></tq-site-footer>
+  </mat-sidenav-content>
+</mat-sidenav-container>

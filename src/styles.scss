@@ -1,2 +1,8 @@
 @import '~normalize.css/normalize.css';
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+
+body, app-root, tq-layout {
+  display: block;
+  height: 100vh;
+}

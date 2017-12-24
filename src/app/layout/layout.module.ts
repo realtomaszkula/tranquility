@@ -1,5 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import {
+  MatToolbarModule,
+  MatButtonModule,
+  MatIconModule,
+  MatSidenavModule
+} from '@angular/material';
+
 import { LayoutComponent } from './layout.component';
 import { SiteHeaderComponent } from './site-header/site-header.component';
 import { SiteFooterComponent } from './site-footer/site-footer.component';
@@ -8,9 +16,20 @@ import { SiteMenuComponent } from './site-menu/site-menu.component';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    FlexLayoutModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSidenavModule
   ],
-  declarations: [LayoutComponent, SiteHeaderComponent, SiteFooterComponent, SiteContentComponent, SiteMenuComponent],
+  declarations: [
+    LayoutComponent,
+    SiteHeaderComponent,
+    SiteFooterComponent,
+    SiteContentComponent,
+    SiteMenuComponent
+  ],
   exports: [LayoutComponent]
 })
-export class LayoutModule { }
+export class LayoutModule {}
