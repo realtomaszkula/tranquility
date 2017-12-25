@@ -1,0 +1,5 @@
+<button routerLink [queryParams]="{startDate: '30-12-2012'}">Click</button>
+
+<div *ngFor="let item of list$ | async">
+  {{ item.startDate | date: 'shortDate' }}
+</div>

@@ -13,7 +13,8 @@ interface Link {
 })
 export class SiteFooterComponent implements OnInit {
   links: Link[] = [
-    { url: '/page1', icon: 'star' },
+    { url: '/home', icon: 'home' },
+    { url: '/attention-training', icon: 'surround_sound' },
     { url: '/page2', icon: 'star' },
     { url: '/page3', icon: 'star' },
     { url: '/page4', icon: 'star' },

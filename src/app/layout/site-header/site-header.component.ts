@@ -13,6 +13,8 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SiteHeaderComponent implements OnInit {
+  readonly title = 'Tranquility';
+
   @Output() toggle = new EventEmitter<void>();
 
   constructor() {}
