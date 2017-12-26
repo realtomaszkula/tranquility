@@ -1,0 +1,7 @@
+<ng-container *ngIf="fabConfig$ | async as config">
+  <ng-container *ngIf="config.isVisible">
+    <button mat-fab (click)="onFab()">
+      <mat-icon>{{ config.icon }}</mat-icon>
+    </button>
+  </ng-container>
+</ng-container>
