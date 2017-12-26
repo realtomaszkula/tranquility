@@ -6,8 +6,17 @@
     "module": "es2015",
     "types": [],
     "paths": {
-      "@classes": [
-        "app/classes"
+      "@components/*": [
+        "app/components/*"
+      ],
+      "@classes/*": [
+        "app/classes/*"
+      ],
+      "@core/*": [
+        "app/core/*"
+      ],
+      "@animations/*": [
+        "app/animations/*"
       ]
     }
   },

@@ -15,10 +15,19 @@
       "es2017",
       "dom"
     ],
-    "baseUrl": ".",
+    "baseUrl": "src",
     "paths": {
-      "@classes": [
-        "src/app/classes"
+      "@components/*": [
+        "app/components/*"
+      ],
+      "@classes/*": [
+        "app/classes/*"
+      ],
+      "@core/*": [
+        "app/core/*"
+      ],
+      "@animations/*": [
+        "app/animations/*"
       ]
     }
   }
