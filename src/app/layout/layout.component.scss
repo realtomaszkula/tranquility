@@ -5,11 +5,13 @@
 mat-sidenav-content {
   display: flex;
   flex-direction: column;
+  display: relative;
 }
 
 tq-site-content {
   flex: 1;
-  overflow: hidden;
+  overflow-y: auto;
+  position: relative;
 }
 
 .sidenav-container {

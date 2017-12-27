@@ -14,6 +14,7 @@ import { SiteHeaderComponent } from './site-header/site-header.component';
 import { SiteFooterComponent } from './site-footer/site-footer.component';
 import { SiteContentComponent } from './site-content/site-content.component';
 import { SiteMenuComponent } from './site-menu/site-menu.component';
+import { FabButtonModule } from 'app/components/fab-button/fab-button.module';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { SiteMenuComponent } from './site-menu/site-menu.component';
     MatButtonModule,
     MatIconModule,
     MatSidenavModule,
+    FabButtonModule,
   ],
   declarations: [
     LayoutComponent,
