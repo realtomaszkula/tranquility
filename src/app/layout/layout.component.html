@@ -1,9 +1,7 @@
 <tq-fab-button></tq-fab-button>
 
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #sidenav mode="over" fixedInViewport>
-    Hello sidenav
-  </mat-sidenav>
+  <mat-sidenav #sidenav mode="over" fixedInViewport></mat-sidenav>
   <mat-sidenav-content>
     <tq-site-header (toggle)="sidenav.toggle()"></tq-site-header>
     <tq-site-content [@routingAnimation]="prepRouteState()">

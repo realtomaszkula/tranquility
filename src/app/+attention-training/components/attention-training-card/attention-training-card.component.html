@@ -1,5 +1,6 @@
 <mat-card>
   <mat-card-header fxLayout="row" fxLayoutAlign="end center">
+    <div>{{ id }}</div>
     <button mat-icon-button (click)="delete.next()">
       <mat-icon >delete</mat-icon>
     </button>
@@ -7,6 +8,7 @@
 
   <mat-card-content>
     <mat-list>
+
       <mat-list-item>
         <mat-icon matListIcon>date_range</mat-icon>
         <h3 matLine>{{ endDate | date: 'shortDate' }} </h3>

@@ -1,6 +1,7 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 
 import * as fromAttentionTraining from './reducer';
+import * as fromRoot from 'app/reducers';
 
 export const getAttentionTrainingState = createFeatureSelector<
   fromAttentionTraining.State
@@ -13,11 +14,7 @@ export const {
   selectTotal: getTotalAttentionTrainings,
 } = fromAttentionTraining.adapter.getSelectors(getAttentionTrainingState);
 
-export const getCollectionLoaded = createSelector(
-  getAttentionTrainingState,
-  fromAttentionTraining.getLoaded,
-);
-export const getCollectionLoading = createSelector(
+export const getAttentionTrainingLoading = createSelector(
   getAttentionTrainingState,
   fromAttentionTraining.getLoading,
 );

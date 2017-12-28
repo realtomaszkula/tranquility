@@ -20,6 +20,10 @@ export class AttentionTrainingCardComponent implements OnInit {
   @Output() delete = new EventEmitter<void>();
   @Input() attentionTraining: AttentionTraining;
 
+  get id() {
+    return '#' + this.attentionTraining.id;
+  }
+
   get startDate() {
     return this.attentionTraining.startDate;
   }

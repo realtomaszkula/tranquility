@@ -6,16 +6,16 @@ import { AttentionTrainingTypes, AttentionTrainingActions } from './actions';
 // tslint:disable-next-line:no-empty-interface
 export interface State extends EntityState<AttentionTraining> {
   loading: boolean;
-  loaded: boolean;
 }
 
 export const adapter: EntityAdapter<AttentionTraining> = createEntityAdapter<
   AttentionTraining
->();
+>({
+  sortComparer: ({ id: a }, { id: b }): number => b - a,
+});
 
 export const initialState: State = adapter.getInitialState({
   loading: false,
-  loaded: false,
 });
 
 export function reducer(
@@ -23,18 +23,43 @@ export function reducer(
   action: AttentionTrainingActions,
 ): State {
   switch (action.type) {
-    case AttentionTrainingTypes.LoadAttentionTrainingsComplete: {
-      return adapter.addMany(action.payload, state);
-    }
-
+    case AttentionTrainingTypes.LoadAttentionTrainings:
     case AttentionTrainingTypes.AddAttentionTraining:
-    case AttentionTrainingTypes.DeleteAttentionTrainingError: {
-      return adapter.addOne(action.payload, state);
+    case AttentionTrainingTypes.DeleteAttentionTraining: {
+      return {
+        ...state,
+        loading: true,
+      };
     }
 
-    case AttentionTrainingTypes.DeleteAttentionTraining:
-    case AttentionTrainingTypes.AddAttentionTrainingError: {
-      return adapter.removeOne(action.payload.id, state);
+    case AttentionTrainingTypes.LoadAttentionTrainingsComplete: {
+      return {
+        ...adapter.addMany(action.payload, state),
+        loading: false,
+      };
+    }
+
+    case AttentionTrainingTypes.AddAttentionTrainingComplete: {
+      return {
+        ...adapter.addOne(action.payload, state),
+        loading: false,
+      };
+    }
+
+    case AttentionTrainingTypes.DeleteAttentionTrainingComplete: {
+      return {
+        ...adapter.removeOne(action.payload.id, state),
+        loading: false,
+      };
+    }
+
+    case AttentionTrainingTypes.AddAttentionTrainingError:
+    case AttentionTrainingTypes.DeleteAttentionTrainingError:
+    case AttentionTrainingTypes.LoadAttentionTrainingsError: {
+      return {
+        ...state,
+        loading: false,
+      };
     }
 
     default: {
@@ -43,5 +68,4 @@ export function reducer(
   }
 }
 
-export const getLoaded = (state: State) => state.loaded;
 export const getLoading = (state: State) => state.loading;

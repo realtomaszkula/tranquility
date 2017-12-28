@@ -1,7 +1,2 @@
-<ng-container *ngIf="list$ | async as list; else loading">
-  <tq-attention-training-card *ngFor="let item of list" [attentionTraining]="item" (delete)="delete(item)"></tq-attention-training-card>
-</ng-container>
-
-<ng-template #loading>
-  <mat-progress-bar mode="indeterminate" color="primary"></mat-progress-bar>
-</ng-template>
+<mat-progress-bar *ngIf="loading$ | async" mode="indeterminate" color="primary"></mat-progress-bar>
+<tq-attention-training-card *ngFor="let item of list$ | async" [attentionTraining]="item" (delete)="delete(item)"></tq-attention-training-card>

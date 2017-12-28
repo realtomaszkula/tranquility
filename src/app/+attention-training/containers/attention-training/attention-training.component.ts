@@ -6,7 +6,10 @@ import { Store } from '@ngrx/store';
 import { FiltersService } from '../../services/filters.service';
 import { QueryParamsService } from '../../services/query-params.service';
 import { AttentionTraining } from '../../model';
-import { getAllAttentionTrainings } from '../../ngrx/selectors';
+import {
+  getAllAttentionTrainings,
+  getAttentionTrainingLoading,
+} from '../../ngrx/selectors';
 import {
   LoadAttentionTrainings,
   DeleteAttentionTraining,
@@ -23,6 +26,7 @@ export class AttentionTrainingComponent implements OnInit {
 
   constructor(private store: Store<any>) {
     this.list$ = this.store.select(getAllAttentionTrainings);
+    this.loading$ = this.store.select(getAttentionTrainingLoading);
   }
 
   ngOnInit() {

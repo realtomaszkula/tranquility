@@ -1,10 +1,11 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { map, tap } from 'rxjs/operators';
 
 import { lastActivatedRouteData } from '@rxjs/index';
-import { FabButtonService } from './fab-button.service';
+import { FabClick } from '../ngrx/actions';
 
 interface FabConfig {
   icon: string;
@@ -22,7 +23,7 @@ export class FabButtonComponent implements OnInit {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private fabService: FabButtonService,
+    private store: Store<any>,
   ) {}
 
   ngOnInit() {
@@ -36,6 +37,6 @@ export class FabButtonComponent implements OnInit {
   }
 
   onFab() {
-    this.fabService.fabSource.next();
+    this.store.dispatch(new FabClick());
   }
 }

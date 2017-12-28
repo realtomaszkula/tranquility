@@ -30,19 +30,19 @@ export class LoadAttentionTrainingsComplete implements Action {
 export class LoadAttentionTrainingsError implements Action {
   readonly type = AttentionTrainingTypes.LoadAttentionTrainingsError;
 
-  constructor(public error: any) {}
+  constructor(public payload: any) {}
 }
 
 export class AddAttentionTraining implements Action {
   readonly type = AttentionTrainingTypes.AddAttentionTraining;
 
-  constructor(public payload: AttentionTraining) {}
+  constructor(public payload: Partial<AttentionTraining>) {}
 }
 
 export class AddAttentionTrainingError implements Action {
   readonly type = AttentionTrainingTypes.AddAttentionTrainingError;
 
-  constructor(public payload: AttentionTraining) {}
+  constructor(public payload: any) {}
 }
 
 export class AddAttentionTrainingComplete implements Action {
@@ -60,7 +60,7 @@ export class DeleteAttentionTraining implements Action {
 export class DeleteAttentionTrainingError implements Action {
   readonly type = AttentionTrainingTypes.DeleteAttentionTrainingError;
 
-  constructor(public payload: AttentionTraining) {}
+  constructor(public payload: any) {}
 }
 
 export class DeleteAttentionTrainingComplete implements Action {

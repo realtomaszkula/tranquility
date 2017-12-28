@@ -8,15 +8,18 @@ import {
 import { environment } from '../../environments/environment';
 import { RouterStateUrl } from '../shared/utils';
 import * as fromRouter from '@ngrx/router-store';
+import * as fromLayout from '../layout/ngrx/reducer';
 
 import { storeFreeze } from 'ngrx-store-freeze';
 
 export interface State {
-  routerReducer: fromRouter.RouterReducerState<RouterStateUrl>;
+  router: fromRouter.RouterReducerState<RouterStateUrl>;
+  layout: fromLayout.State;
 }
 
 export const reducers: ActionReducerMap<State> = {
-  routerReducer: fromRouter.routerReducer,
+  router: fromRouter.routerReducer,
+  layout: fromLayout.reducer,
 };
 
 export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
@@ -30,3 +33,26 @@ export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
 export const metaReducers: MetaReducer<State>[] = !environment.production
   ? [logger, storeFreeze]
   : [];
+
+export const getRouterState = createFeatureSelector<
+  fromRouter.RouterReducerState<RouterStateUrl>
+>('router');
+
+export const getCurrentUrl = createSelector(
+  getRouterState,
+  (router: fromRouter.RouterReducerState<RouterStateUrl>) =>
+    router && router.state && router.state.url,
+);
+
+export const getCurrentQueryParams = createSelector(
+  getRouterState,
+  (router: fromRouter.RouterReducerState<RouterStateUrl>) =>
+    router && router.state && router.state.queryParams,
+);
+
+export const getLayoutState = createFeatureSelector<fromLayout.State>('layout');
+
+export const getShowSidenav = createSelector(
+  getLayoutState,
+  fromLayout.getShowSidenav,
+);

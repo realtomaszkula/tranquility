@@ -23,7 +23,6 @@ import { Comp2Component } from './comp2/comp2.component';
 import { Comp3Component } from './comp3/comp3.component';
 import { Comp4Component } from './comp4/comp4.component';
 
-import { FabButtonModule } from '@components/fab-button/fab-button.module';
 @NgModule({
   declarations: [AppComponent, Comp2Component, Comp3Component, Comp4Component],
   imports: [
@@ -35,7 +34,6 @@ import { FabButtonModule } from '@components/fab-button/fab-button.module';
     environment.production
       ? ServiceWorkerModule.register('/ngsw-worker.js')
       : [],
-    FabButtonModule.forRoot(),
     StoreModule.forRoot(reducers, { metaReducers }),
     StoreRouterConnectingModule,
     !environment.production ? StoreDevtoolsModule.instrument() : [],

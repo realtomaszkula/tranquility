@@ -25,7 +25,7 @@ export abstract class IndexDB<T> {
     });
   }
 
-  get(key: keyof T): Promise<T> {
+  get(key: any): Promise<T> {
     return this.dbPromise.then(db => {
       return db
         .transaction(this.storeName)
@@ -34,26 +34,32 @@ export abstract class IndexDB<T> {
     });
   }
 
-  add(val: Partial<T>, key?: keyof T): Promise<void> {
-    return this.dbPromise.then(db => {
-      const tx = db.transaction(this.storeName, 'readwrite');
-      tx.objectStore(this.storeName).add(val, key);
-      return tx.complete;
-    });
+  add(val: Partial<T>, key?: keyof T): Promise<T> {
+    return this.dbPromise
+      .then(async db => {
+        const tx = db.transaction(this.storeName, 'readwrite');
+        const id = tx.objectStore(this.storeName).add(val, key);
+        await tx.complete;
+        return id;
+      })
+      .then(id => this.get(id));
   }
 
-  set(key: keyof T, val: Partial<T>) {
-    return this.dbPromise.then(db => {
-      const tx = db.transaction(this.storeName, 'readwrite');
-      tx.objectStore(this.storeName).put(val, key);
-      return tx.complete;
-    });
+  set(key: keyof T, val: Partial<T>): Promise<T> {
+    return this.dbPromise
+      .then(async db => {
+        const tx = db.transaction(this.storeName, 'readwrite');
+        const id = tx.objectStore(this.storeName).put(val, key);
+        await tx.complete;
+        return id;
+      })
+      .then(id => this.get(id));
   }
 
-  delete(key: keyof T) {
-    return this.dbPromise.then(db => {
+  delete(key: keyof T): Promise<void> {
+    return this.dbPromise.then(async db => {
       const tx = db.transaction(this.storeName, 'readwrite');
-      tx.objectStore(this.storeName).delete(key);
+      const id = tx.objectStore(this.storeName).delete(key);
       return tx.complete;
     });
   }
