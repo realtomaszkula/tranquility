@@ -12,6 +12,9 @@ tq-site-content {
   flex: 1;
   overflow-y: auto;
   position: relative;
+
+  // router-outlet children can set flex: 1 to fill the entire layout
+  display: flex;
 }
 
 .sidenav-container {
