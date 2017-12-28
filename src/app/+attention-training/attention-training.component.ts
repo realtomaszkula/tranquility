@@ -1,10 +1,14 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-
-import { AttentionTrainingKey, AttentionTraining } from './types';
-import { AttentionTrainingService } from './services/attention-training.service';
-import { AttentionTrainingQpService } from './services/attention-training-qp.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AttentionTrainingFiltersService } from './services/attention-training-filters.service';
+import { Observable } from 'rxjs/Observable';
+import { Store } from '@ngrx/store';
+
+import { FiltersService } from './services/filters.service';
+import { QueryParamsService } from './services/query-params.service';
+import { AttentionTraining } from './model';
+
+import { getAllAttentionTrainings } from './ngrx/selectors';
+import { LoadAttentionTrainings } from './ngrx/actions';
 
 @Component({
   selector: 'tq-attention-training',
@@ -12,25 +16,14 @@ import { AttentionTrainingFiltersService } from './services/attention-training-f
   styleUrls: ['./attention-training.component.scss'],
 })
 export class AttentionTrainingComponent implements OnInit {
-  list$: Promise<AttentionTraining[]>;
+  list$: Observable<AttentionTraining[]>;
+  loading$: Observable<boolean>;
 
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private qp$: AttentionTrainingQpService,
-    private filters: AttentionTrainingFiltersService,
-  ) {}
-
-  ngOnInit() {
-    this.qp$
-      .getQp$(this.activatedRoute)
-      .subscribe(queryParams =>
-        this.filters.filters.setValue(queryParams, { emitEvent: false }),
-      );
-
-    this.filters.filters.valueChanges.subscribe(queryParams =>
-      this.router.navigate([], { queryParams }),
-    );
+  constructor(private store: Store<any>) {
+    this.list$ = this.store.select(getAllAttentionTrainings);
   }
 
+  ngOnInit() {
+    this.store.dispatch(new LoadAttentionTrainings());
+  }
 }

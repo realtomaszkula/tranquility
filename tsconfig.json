@@ -20,6 +20,9 @@
       "@components/*": [
         "app/components/*"
       ],
+      "@rxjs/*": [
+        "app/rxjs/*"
+      ],
       "@classes/*": [
         "app/classes/*"
       ],

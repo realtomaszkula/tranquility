@@ -3,7 +3,15 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AttentionTrainingComponent } from './attention-training.component';
 
-const routes: Routes = [{ path: '', component: AttentionTrainingComponent }];
+const routes: Routes = [
+  {
+    path: '',
+    component: AttentionTrainingComponent,
+    data: {
+      fabIcon: 'home',
+    },
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

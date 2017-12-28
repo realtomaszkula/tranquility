@@ -2,11 +2,14 @@ import { Injectable } from '@angular/core';
 import { UpgradeDB } from 'idb';
 import { Observable } from 'rxjs/Observable';
 
-import { IndexDB } from '@classes';
-import { AttentionTraining, AttentionTrainingKey } from '../types';
+import { IndexDB } from '@classes/index';
+import {
+  AttentionTraining,
+  AttentionTrainingKey,
+} from '../model';
 
 @Injectable()
-export class AttentionTrainingService extends IndexDB<AttentionTraining> {
+export class DBService extends IndexDB<AttentionTraining> {
   readonly dbName = 'tranquility';
   readonly storeName = 'attention_training';
 

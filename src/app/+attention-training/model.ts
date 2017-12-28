@@ -11,6 +11,7 @@ export interface AttentionTrainingFilters {
 }
 
 export interface AttentionTraining {
+  id: number;
   startDate: Date;
   endDate: Date;
   soundChangeInterval: number;

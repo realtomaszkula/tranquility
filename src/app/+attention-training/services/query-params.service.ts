@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { map, filter, pluck, tap } from 'rxjs/operators';
-import { parse } from 'fecha';
 import { combineLatest } from 'rxjs/observable/combineLatest';
 
-import { AttentionTrainingKey, AttentionTrainingFilters } from '../types';
+import * as moment from 'moment';
+
+import { AttentionTrainingKey, AttentionTrainingFilters } from '../model';
 
 @Injectable()
-export class AttentionTrainingQpService {
+export class QueryParamsService {
   constructor() {}
 
   getQp$(activatedRoute: ActivatedRoute): Observable<AttentionTrainingFilters> {
@@ -16,8 +17,8 @@ export class AttentionTrainingQpService {
       map(paramsMap => paramsMap.get(AttentionTrainingKey.startDate)),
       map(
         dateString =>
-          dateString
-            ? (parse(dateString, 'DD-MM-YYYY') as Date).toISOString()
+          moment(dateString).isValid()
+            ? moment(dateString).format('DD-MM-YYYY')
             : null,
       ),
     );
@@ -26,8 +27,8 @@ export class AttentionTrainingQpService {
       map(paramsMap => paramsMap.get(AttentionTrainingKey.endDate)),
       map(
         dateString =>
-          dateString
-            ? (parse(dateString, 'DD-MM-YYYY') as Date).toISOString()
+          moment(dateString).isValid()
+            ? moment(dateString).format('DD-MM-YYYY')
             : null,
       ),
     );
