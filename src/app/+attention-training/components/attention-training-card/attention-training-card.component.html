@@ -1,0 +1,24 @@
+<mat-card>
+  <mat-card-header fxLayout="row" fxLayoutAlign="end center">
+    <button mat-icon-button (click)="delete.next()">
+      <mat-icon >delete</mat-icon>
+    </button>
+  </mat-card-header>
+
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item>
+        <mat-icon matListIcon>date_range</mat-icon>
+        <h3 matLine>{{ endDate | date: 'shortDate' }} </h3>
+      </mat-list-item>
+
+      <mat-list-item>
+        <mat-icon matListIcon>access_time</mat-icon>
+        <h3 matLine>{{ timeElapsed }}</h3>
+      </mat-list-item>
+    </mat-list>
+    <mat-icon>
+
+    </mat-icon>
+  </mat-card-content>
+</mat-card>

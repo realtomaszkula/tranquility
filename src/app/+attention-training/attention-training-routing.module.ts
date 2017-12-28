@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AttentionTrainingComponent } from './attention-training.component';
+import { AttentionTrainingComponent } from './containers/attention-training/attention-training.component';
 
 const routes: Routes = [
   {

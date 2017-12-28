@@ -32,7 +32,7 @@ export class AttentionTrainingEffects {
     .pipe(
       switchMap(() =>
         fromPromise(this.db.getAll()).pipe(
-          delay(400),
+          delay(1000),
           map(
             attentionTrainings =>
               new LoadAttentionTrainingsComplete(attentionTrainings),

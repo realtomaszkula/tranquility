@@ -3,12 +3,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
-import { FiltersService } from './services/filters.service';
-import { QueryParamsService } from './services/query-params.service';
-import { AttentionTraining } from './model';
-
-import { getAllAttentionTrainings } from './ngrx/selectors';
-import { LoadAttentionTrainings } from './ngrx/actions';
+import { FiltersService } from '../../services/filters.service';
+import { QueryParamsService } from '../../services/query-params.service';
+import { AttentionTraining } from '../../model';
+import { getAllAttentionTrainings } from '../../ngrx/selectors';
+import {
+  LoadAttentionTrainings,
+  DeleteAttentionTraining,
+} from '../../ngrx/actions';
 
 @Component({
   selector: 'tq-attention-training',
@@ -25,5 +27,9 @@ export class AttentionTrainingComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(new LoadAttentionTrainings());
+  }
+
+  delete(payload: AttentionTraining) {
+    this.store.dispatch(new DeleteAttentionTraining(payload));
   }
 }
