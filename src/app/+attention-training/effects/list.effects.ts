@@ -48,7 +48,6 @@ export class AttentionTrainingEffects {
   load$: Observable<Action> = this.actions$
     .ofType(AttentionTrainingTypes.LoadAttentionTrainings)
     .pipe(
-      delay(1000),
       switchMap(() =>
         fromPromise(this.db.getAll()).pipe(
           map(

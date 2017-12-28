@@ -56,6 +56,11 @@ export const getTimerValue = createSelector(
   fromTimer.getCurrentValue,
 );
 
+export const getTimerValueInSeconds = createSelector(
+  getTimerValue,
+  value => value / 1000,
+);
+
 export const getTimerIsRunning = createSelector(
   getTimerState,
   fromTimer.getIsRunning,

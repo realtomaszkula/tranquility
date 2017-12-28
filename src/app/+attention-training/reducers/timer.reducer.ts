@@ -30,7 +30,7 @@ export function reducer(state = initialState, action: TimerActions): State {
     case TimerTypes.increment: {
       return {
         ...state,
-        value: state.value + 1,
+        value: state.value + 100,
       };
     }
     case TimerTypes.reset: {

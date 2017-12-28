@@ -27,7 +27,9 @@ export class NewAttentionTrainingComponent implements OnInit {
     this.isRunning$ = this.store.select(
       fromAttentionTraining.getTimerIsRunning,
     );
-    this.timerValue$ = this.store.select(fromAttentionTraining.getTimerValue);
+    this.timerValue$ = this.store.select(
+      fromAttentionTraining.getTimerValueInSeconds,
+    );
   }
 
   ngOnInit() {}

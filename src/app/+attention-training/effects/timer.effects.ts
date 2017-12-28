@@ -31,7 +31,7 @@ export class TimerEffects {
     .ofType(TimerTypes.start, TimerTypes.resume)
     .pipe(
       switchMap(() =>
-        interval(1000).pipe(
+        interval(100).pipe(
           map(() => new IncrementTimer()),
           takeUntil(this.actions$.ofType(TimerTypes.stop)),
         ),
@@ -47,7 +47,7 @@ export class TimerEffects {
           new AddAttentionTraining({
             trainingDate: new Date(),
             soundChangeIntervalInSeconds: 40,
-            trainingDurationInSeconds: timerValue,
+            trainingDurationInSeconds: timerValue / 1000,
           }),
           new ResetTimer(),
         ]),

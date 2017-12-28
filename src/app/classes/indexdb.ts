@@ -46,14 +46,13 @@ export abstract class IndexDB<T> {
   }
 
   set(key: keyof T, val: Partial<T>): Promise<T> {
-    return this.dbPromise
-      .then(async db => {
-        const tx = db.transaction(this.storeName, 'readwrite');
-        const id = tx.objectStore(this.storeName).put(val, key);
-        await tx.complete;
-        return id;
-      })
-      .then(id => this.get(id));
+    return this.dbPromise.then(async db => {
+      const tx = db.transaction(this.storeName, 'readwrite');
+      const id = tx.objectStore(this.storeName).put(val, key);
+      await tx.complete;
+      return id;
+    })
+    .then(id => this.get(id));
   }
 
   delete(key: keyof T): Promise<void> {
