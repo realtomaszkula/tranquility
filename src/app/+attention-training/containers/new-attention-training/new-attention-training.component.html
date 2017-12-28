@@ -1,0 +1,12 @@
+<div class="mat-h1">{{ timerValue$ | async }} </div>
+
+<div fxLayout="row" fxLayoutAlign="center center">
+  <button mat-raised-button *ngIf="isInInitialState$ | async" (click)="onStart()" fxFlex>Start</button>
+  <button mat-raised-button *ngIf="isRunning$ | async" (click)="onStop()" fxFlex>Stop</button>
+
+  <ng-container *ngIf="isStopped$ | async">
+    <button mat-raised-button (click)="onReset()" fxFlex>Reset</button>
+    <button mat-raised-button (click)="onResume()" fxFlex>Resume</button>
+    <button mat-raised-button (click)="onSave()" fxFlex>Save</button>
+  </ng-container>
+</div>

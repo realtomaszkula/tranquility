@@ -6,7 +6,7 @@ import { IndexDB } from '@classes/index';
 import {
   AttentionTraining,
   AttentionTrainingKey,
-} from '../model';
+} from '../models/attention-training';
 
 @Injectable()
 export class DBService extends IndexDB<AttentionTraining> {
@@ -24,8 +24,8 @@ export class DBService extends IndexDB<AttentionTraining> {
         const store = db.transaction.objectStore(this.storeName);
 
         store.createIndex(
-          AttentionTrainingKey.endDate,
-          AttentionTrainingKey.endDate,
+          AttentionTrainingKey.trainingDate,
+          AttentionTrainingKey.trainingDate,
           { unique: false },
         );
     }

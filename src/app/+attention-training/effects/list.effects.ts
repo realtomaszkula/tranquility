@@ -17,6 +17,8 @@ import {
   withLatestFrom,
 } from 'rxjs/operators';
 
+import { LayoutActionTypes } from 'app/layout/ngrx/actions';
+import { getCurrentUrl } from 'app/reducers';
 import {
   AttentionTrainingTypes,
   LoadAttentionTrainingsComplete,
@@ -27,14 +29,21 @@ import {
   DeleteAttentionTraining,
   DeleteAttentionTrainingComplete,
   DeleteAttentionTrainingError,
-} from './actions';
-import { LayoutActionTypes } from 'app/layout/ngrx/actions';
-import { AttentionTraining } from '../model';
+} from '../actions/list.actions';
+import { AttentionTraining } from '../models/attention-training';
 import { DBService } from '../services/db.service';
-import { getCurrentUrl } from 'app/reducers';
 
 @Injectable()
 export class AttentionTrainingEffects {
+  @Effect({ dispatch: false })
+  fab$: Observable<boolean> = this.actions$
+    .ofType(LayoutActionTypes.FabClick)
+    .pipe(
+      withLatestFrom(this.store.select(getCurrentUrl)),
+      filter(([action, url]) => url === '/attention-training'),
+      switchMap(() => this.router.navigateByUrl('/attention-training/new')),
+    );
+
   @Effect()
   load$: Observable<Action> = this.actions$
     .ofType(AttentionTrainingTypes.LoadAttentionTrainings)
@@ -52,37 +61,18 @@ export class AttentionTrainingEffects {
     );
 
   @Effect()
-  create$: Observable<Action> = this.actions$
-    .ofType(LayoutActionTypes.FabClick)
-    .pipe(
-      switchMap(() =>
-        of(
-          new AddAttentionTraining({
-            startDate: new Date(Math.random()),
-            endDate: new Date(),
-            soundChangeInterval: 30,
-          }),
-        ),
-      ),
-    );
-
-  @Effect()
   add$: Observable<Action> = this.actions$
     .ofType(AttentionTrainingTypes.AddAttentionTraining)
     .pipe(
-      delay(1000),
-      withLatestFrom(this.store.select(getCurrentUrl)),
-      filter(([action, url]) => url === '/attention-training'),
-      map(([action]) => action),
-      switchMap(({ payload }: any) => {
-        return fromPromise(this.db.add(payload)).pipe(
+      switchMap(({ payload }: AddAttentionTraining) =>
+        fromPromise(this.db.add(payload)).pipe(
           map(
             attentionTraining =>
               new AddAttentionTrainingComplete(attentionTraining),
           ),
           catchError(error => of(new AddAttentionTrainingError(error))),
-        );
-      }),
+        ),
+      ),
     );
 
   @Effect()
@@ -101,6 +91,7 @@ export class AttentionTrainingEffects {
     );
 
   constructor(
+    private router: Router,
     private actions$: Actions,
     private db: DBService,
     private store: Store<any>,

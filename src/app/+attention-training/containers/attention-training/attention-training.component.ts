@@ -3,17 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
-import { FiltersService } from '../../services/filters.service';
-import { QueryParamsService } from '../../services/query-params.service';
-import { AttentionTraining } from '../../model';
-import {
-  getAllAttentionTrainings,
-  getAttentionTrainingLoading,
-} from '../../ngrx/selectors';
-import {
-  LoadAttentionTrainings,
-  DeleteAttentionTraining,
-} from '../../ngrx/actions';
+import { AttentionTraining } from '../../models/attention-training';
+import * as fromAttentionTraining from '../../reducers';
+import * as list from '../../actions/list.actions';
 
 @Component({
   selector: 'tq-attention-training',
@@ -25,15 +17,19 @@ export class AttentionTrainingComponent implements OnInit {
   loading$: Observable<boolean>;
 
   constructor(private store: Store<any>) {
-    this.list$ = this.store.select(getAllAttentionTrainings);
-    this.loading$ = this.store.select(getAttentionTrainingLoading);
+    this.list$ = this.store.select(
+      fromAttentionTraining.getAllAttentionTrainings,
+    );
+    this.loading$ = this.store.select(
+      fromAttentionTraining.getAttentionTrainingLoading,
+    );
   }
 
   ngOnInit() {
-    this.store.dispatch(new LoadAttentionTrainings());
+    this.store.dispatch(new list.LoadAttentionTrainings());
   }
 
   delete(payload: AttentionTraining) {
-    this.store.dispatch(new DeleteAttentionTraining(payload));
+    this.store.dispatch(new list.DeleteAttentionTraining(payload));
   }
 }

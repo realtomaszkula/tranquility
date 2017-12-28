@@ -1,9 +1,11 @@
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { AttentionTraining } from '../model';
 
-import { AttentionTrainingTypes, AttentionTrainingActions } from './actions';
+import { AttentionTraining } from '../models/attention-training';
+import {
+  AttentionTrainingTypes,
+  AttentionTrainingActions,
+} from '../actions/list.actions';
 
-// tslint:disable-next-line:no-empty-interface
 export interface State extends EntityState<AttentionTraining> {
   loading: boolean;
 }

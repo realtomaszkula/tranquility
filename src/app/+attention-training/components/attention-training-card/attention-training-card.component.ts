@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 
 import * as moment from 'moment';
-import { AttentionTraining } from '../../model';
+import { AttentionTraining } from '../../models/attention-training';
 
 @Component({
   selector: 'tq-attention-training-card',
@@ -20,20 +20,26 @@ export class AttentionTrainingCardComponent implements OnInit {
   @Output() delete = new EventEmitter<void>();
   @Input() attentionTraining: AttentionTraining;
 
+  readonly icons: { [key in keyof Partial<AttentionTraining>]: string } = {
+    soundChangeIntervalInSeconds: 'track_changes',
+    trainingDurationInSeconds: 'timer',
+    trainingDate: 'date_range',
+  };
+
   get id() {
     return '#' + this.attentionTraining.id;
   }
 
-  get startDate() {
-    return this.attentionTraining.startDate;
+  get trainingDate() {
+    return this.attentionTraining.trainingDate;
   }
 
-  get endDate() {
-    return this.attentionTraining.endDate;
+  get trainingDurationInSeconds() {
+    return this.attentionTraining.trainingDurationInSeconds + 's';
   }
 
-  get timeElapsed() {
-    return moment(this.endDate).diff(moment(this.startDate), 'm') + ' minutes';
+  get soundIntervalChangeInSeconds() {
+    return this.attentionTraining.soundChangeIntervalInSeconds + 's';
   }
 
   constructor() {}

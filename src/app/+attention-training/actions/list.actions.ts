@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { AttentionTraining } from '../model';
+import { AttentionTraining } from '../models/attention-training';
 
 export enum AttentionTrainingTypes {
   ClearAttentionTrainings = '[AttentionTraining] Clear',
