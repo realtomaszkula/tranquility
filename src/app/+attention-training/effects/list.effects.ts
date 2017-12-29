@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import { empty } from 'rxjs/observable/empty';
 import { fromPromise } from 'rxjs/observable/fromPromise';
 import { of } from 'rxjs/observable/of';
+import { combineLatest } from 'rxjs/observable/combineLatest';
 import {
   delay,
   filter,
@@ -19,8 +20,9 @@ import {
   flatMap,
 } from 'rxjs/operators';
 
+import * as fromRoot from 'app/reducers';
+import * as fromAttentionTraining from '../reducers';
 import { LayoutTypes } from 'app/layout/actions/layout.actions';
-import { getCurrentUrl } from 'app/reducers';
 import {
   AttentionTrainingTypes,
   LoadAttentionTrainingsComplete,
@@ -32,10 +34,9 @@ import {
   DeleteAttentionTrainingComplete,
   DeleteAttentionTrainingError,
 } from '../actions/list.actions';
-import { AttentionTraining } from '../models/attention-training';
 import { DBService } from '../services/db.service';
-import { getTimerValue } from 'app/+attention-training/reducers';
-import { ResetTimer } from 'app/+attention-training/actions/timer.actions';
+import { AttentionTraining } from '../models/attention-training';
+import { ResetTimer } from '../actions/timer.actions';
 
 @Injectable()
 export class AttentionTrainingEffects {
@@ -43,7 +44,7 @@ export class AttentionTrainingEffects {
   fab$: Observable<boolean> = this.actions$
     .ofType(LayoutTypes.ClickFab)
     .pipe(
-      withLatestFrom(this.store.select(getCurrentUrl)),
+      withLatestFrom(this.store.select(fromRoot.getCurrentUrl)),
       filter(([action, url]) => url === '/attention-training'),
       switchMap(() => this.router.navigateByUrl('/attention-training/new')),
     );
@@ -53,16 +54,22 @@ export class AttentionTrainingEffects {
     .ofType(LayoutTypes.ClickFabMini)
     .pipe(
       switchMap(() =>
-        this.store.select(getTimerValue).pipe(
-          first(),
-          flatMap(timerValue => [
-            new AddAttentionTraining({
-              trainingDate: new Date(),
-              soundChangeIntervalInSeconds: 40,
-              trainingDurationInSeconds: timerValue / 1000,
-            }),
-            new ResetTimer(),
-          ]),
+        combineLatest(
+          this.store.select(fromAttentionTraining.getTimerValueInSeconds),
+          this.store.select(
+            fromAttentionTraining.getSoundChangeIntervalInSecondsForTrainingState,
+          ),
+        ).pipe(
+          flatMap(
+            ([trainingDurationInSeconds, soundChangeIntervalInSeconds]) => [
+              new AddAttentionTraining({
+                trainingDate: new Date(),
+                soundChangeIntervalInSeconds,
+                trainingDurationInSeconds,
+              }),
+              new ResetTimer(),
+            ],
+          ),
         ),
       ),
     );
@@ -116,6 +123,6 @@ export class AttentionTrainingEffects {
     private router: Router,
     private actions$: Actions,
     private db: DBService,
-    private store: Store<any>,
+    private store: Store<fromAttentionTraining.State>,
   ) {}
 }

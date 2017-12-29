@@ -4,6 +4,9 @@ import * as fromList from './list.reducer';
 import * as fromTimer from './timer.reducer';
 import * as fromTraining from './training.reducer';
 import * as fromRoot from 'app/reducers';
+import { getSettingsState } from 'app/reducers';
+import { AttentionTrainingType } from 'app/+attention-training/models/attention-training';
+import { AttentionTrainingSettings } from 'app/settings/models/settings';
 
 export interface AttentionTrainingState {
   list: fromList.State;
@@ -88,4 +91,30 @@ export const getIsBeginnerTraining = createSelector(
 export const getIsAdvancedTraining = createSelector(
   getTrainingState,
   fromTraining.getIsAdvancedTrainig,
+);
+
+/* Combined selectors */
+export const getSettingsForTrainingState = createSelector(
+  getTrainingState,
+  getSettingsState,
+  (training, settings) => {
+    switch (training.trainingType) {
+      case AttentionTrainingType.advanced: {
+        return {
+          ...settings.attentionTraining.advanced,
+        };
+      }
+      case AttentionTrainingType.beginner:
+      default: {
+        return {
+          ...settings.attentionTraining.beginner,
+        };
+      }
+    }
+  },
+);
+
+export const getSoundChangeIntervalInSecondsForTrainingState = createSelector(
+  getSettingsForTrainingState,
+  state => state.soundChangeIntervalInSeconds,
 );

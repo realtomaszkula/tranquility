@@ -3,6 +3,7 @@ import { AttentionTrainingType } from '../models/attention-training';
 
 export enum TrainingTypes {
   setType = '[Training] set training type',
+  announceSoundChange = '[Traning] announceSoundChange',
 }
 
 export class SetTrainingType implements Action {
@@ -11,4 +12,8 @@ export class SetTrainingType implements Action {
   constructor(public payload: { trainingType: AttentionTrainingType }) {}
 }
 
-export type TrainingActions = SetTrainingType;
+export class AnnounceSoundChange implements Action {
+  readonly type = TrainingTypes.announceSoundChange;
+}
+
+export type TrainingActions = SetTrainingType | AnnounceSoundChange;

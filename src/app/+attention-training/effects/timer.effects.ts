@@ -15,12 +15,14 @@ import {
   flatMap,
 } from 'rxjs/operators';
 
+import { AnnounceSoundChange } from '../actions/training.actions';
 import {
   TimerTypes,
   IncrementTimer,
   StopTimer,
   ResetTimer,
 } from '../actions/timer.actions';
+import * as fromAttentionTraining from '../reducers';
 
 @Injectable()
 export class TimerEffects {
@@ -33,6 +35,26 @@ export class TimerEffects {
           map(() => new IncrementTimer()),
           takeUntil(this.actions$.ofType(TimerTypes.stop)),
         ),
+      ),
+    );
+
+  @Effect()
+  announceSoundChange$: Observable<any> = this.actions$
+    .ofType(TimerTypes.start, TimerTypes.resume)
+    .pipe(
+      switchMap(() =>
+        this.store
+          .select(
+            fromAttentionTraining.getSoundChangeIntervalInSecondsForTrainingState,
+          )
+          .pipe(
+            switchMap(soundChangeInterval =>
+              interval(soundChangeInterval * 1000).pipe(
+                map(() => new AnnounceSoundChange()),
+                takeUntil(this.actions$.ofType(TimerTypes.stop)),
+              ),
+            ),
+          ),
       ),
     );
 

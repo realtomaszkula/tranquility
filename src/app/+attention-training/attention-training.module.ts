@@ -16,10 +16,11 @@ import {
 import { reducers } from './reducers';
 import { AttentionTrainingEffects } from './effects/list.effects';
 import { TimerEffects } from './effects/timer.effects';
+import { TrainingEffects } from './effects/training.effects';
 
-import { AttentionTrainingRoutingModule } from './attention-training-routing.module';
 import { DBService } from './services/db.service';
-import { FiltersService } from './services/filters.service';
+import { VibrationService } from './services/vibration.service';
+import { AttentionTrainingRoutingModule } from './attention-training-routing.module';
 import { AttentionTrainingComponent } from './containers/attention-training/attention-training.component';
 import { AttentionTrainingCardComponent } from './components/attention-training-card/attention-training-card.component';
 import { NewAttentionTrainingComponent } from './containers/new-attention-training/new-attention-training.component';
@@ -37,13 +38,17 @@ import { NewAttentionTrainingComponent } from './containers/new-attention-traini
     MatListModule,
     MatProgressBarModule,
     StoreModule.forFeature('attentionTraining', reducers),
-    EffectsModule.forFeature([AttentionTrainingEffects, TimerEffects]),
+    EffectsModule.forFeature([
+      AttentionTrainingEffects,
+      TimerEffects,
+      TrainingEffects,
+    ]),
   ],
   declarations: [
     AttentionTrainingComponent,
     AttentionTrainingCardComponent,
     NewAttentionTrainingComponent,
   ],
-  providers: [DBService, FiltersService],
+  providers: [DBService, VibrationService],
 })
 export class AttentionTrainingModule {}
