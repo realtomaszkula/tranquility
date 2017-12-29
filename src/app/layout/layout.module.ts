@@ -15,6 +15,7 @@ import { SiteFooterComponent } from './site-footer/site-footer.component';
 import { SiteContentComponent } from './site-content/site-content.component';
 import { SiteMenuComponent } from './site-menu/site-menu.component';
 import { FabButtonComponent } from './fab-button/fab-button.component';
+import { FabMiniButtonComponent } from './fab-mini-button/fab-mini-button.component';
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import { FabButtonComponent } from './fab-button/fab-button.component';
     SiteContentComponent,
     SiteMenuComponent,
     FabButtonComponent,
+    FabMiniButtonComponent,
   ],
   exports: [LayoutComponent],
 })

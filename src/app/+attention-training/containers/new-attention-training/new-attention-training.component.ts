@@ -49,8 +49,4 @@ export class NewAttentionTrainingComponent implements OnInit {
   onResume() {
     this.store.dispatch(new timer.ResumeTimer());
   }
-
-  onSave() {
-    this.store.dispatch(new timer.SaveTimer());
-  }
 }

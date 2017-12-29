@@ -1,6 +1,15 @@
-<mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center ">
-  <h3 routerLink="/">{{title}}</h3>
-  <button mat-icon-button (click)="toggle.emit()">
-    <mat-icon>menu</mat-icon>
-  </button>
+<mat-toolbar color="primary">
+  <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center ">
+    <!-- left -->
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <button mat-icon-button (click)="toggle.emit()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <h3 routerLink="/">{{title}}</h3>
+    </div>
+
+    <!-- right -->
+    <tq-fab-mini-button></tq-fab-mini-button>
+
+  </mat-toolbar-row>
 </mat-toolbar>

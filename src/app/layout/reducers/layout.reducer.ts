@@ -4,12 +4,16 @@ export interface State {
   showSidenav: boolean;
   showFab: boolean;
   fabIcon: string | null;
+  showFabMini: boolean;
+  fabMiniIcon: string | null;
 }
 
 export const initialState: State = {
   showSidenav: false,
   showFab: false,
   fabIcon: '',
+  showFabMini: false,
+  fabMiniIcon: '',
 };
 
 export function reducer(state = initialState, action: LayoutActions): State {
@@ -40,6 +44,20 @@ export function reducer(state = initialState, action: LayoutActions): State {
         fabIcon: '',
       };
     }
+    case LayoutTypes.ShowFabMini: {
+      return {
+        ...state,
+        showFabMini: true,
+        fabMiniIcon: action.payload.fabMiniIcon,
+      };
+    }
+    case LayoutTypes.HideFabMini: {
+      return {
+        ...state,
+        showFabMini: false,
+        fabMiniIcon: '',
+      };
+    }
     default:
       return state;
   }
@@ -48,3 +66,5 @@ export function reducer(state = initialState, action: LayoutActions): State {
 export const getShowSidenav = (state: State) => state.showSidenav;
 export const getShowFab = (state: State) => state.showFab;
 export const getFabIcon = (state: State) => state.fabIcon;
+export const getShowFabMini = (state: State) => state.showFabMini;
+export const getFabMiniIcon = (state: State) => state.fabMiniIcon;

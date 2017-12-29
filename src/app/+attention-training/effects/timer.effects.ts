@@ -15,6 +15,7 @@ import {
   flatMap,
 } from 'rxjs/operators';
 
+import { LayoutTypes } from 'app/layout/actions/layout.actions';
 import { State, getTimerValue } from '../reducers';
 import {
   TimerTypes,
@@ -39,21 +40,23 @@ export class TimerEffects {
     );
 
   @Effect()
-  save$: Observable<Action> = this.actions$.ofType(TimerTypes.save).pipe(
-    switchMap(() =>
-      this.store.select(getTimerValue).pipe(
-        first(),
-        flatMap(timerValue => [
-          new AddAttentionTraining({
-            trainingDate: new Date(),
-            soundChangeIntervalInSeconds: 40,
-            trainingDurationInSeconds: timerValue / 1000,
-          }),
-          new ResetTimer(),
-        ]),
+  save$: Observable<Action> = this.actions$
+    .ofType(LayoutTypes.ClickFabMini)
+    .pipe(
+      switchMap(() =>
+        this.store.select(getTimerValue).pipe(
+          first(),
+          flatMap(timerValue => [
+            new AddAttentionTraining({
+              trainingDate: new Date(),
+              soundChangeIntervalInSeconds: 40,
+              trainingDurationInSeconds: timerValue / 1000,
+            }),
+            new ResetTimer(),
+          ]),
+        ),
       ),
-    ),
-  );
+    );
 
   constructor(private actions$: Actions, private store: Store<State>) {}
 }

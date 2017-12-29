@@ -59,3 +59,11 @@ export const getShowSidenav = createSelector(
 
 export const getShowFab = createSelector(getLayoutState, fromLayout.getShowFab);
 export const getFabIcon = createSelector(getLayoutState, fromLayout.getFabIcon);
+export const getShowFabMini = createSelector(
+  getLayoutState,
+  fromLayout.getShowFabMini,
+);
+export const getFabMiniIcon = createSelector(
+  getLayoutState,
+  fromLayout.getFabMiniIcon,
+);

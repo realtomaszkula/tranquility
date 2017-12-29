@@ -1,10 +1,9 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
 import { ClickFab } from '../actions/layout.actions';
-import { getShowFab, getFabIcon } from 'app/reducers';
+import * as fromRoot from 'app/reducers';
 
 @Component({
   selector: 'tq-fab-button',
@@ -15,13 +14,9 @@ export class FabButtonComponent implements OnInit {
   fabIcon$: Observable<string>;
   showFab$: Observable<boolean>;
 
-  constructor(
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private store: Store<any>,
-  ) {
-    this.showFab$ = this.store.select(getShowFab);
-    this.fabIcon$ = this.store.select(getFabIcon);
+  constructor(private store: Store<fromRoot.State>) {
+    this.showFab$ = this.store.select(fromRoot.getShowFab);
+    this.fabIcon$ = this.store.select(fromRoot.getFabIcon);
   }
 
   ngOnInit() {}
