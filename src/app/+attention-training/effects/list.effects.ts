@@ -17,7 +17,7 @@ import {
   withLatestFrom,
 } from 'rxjs/operators';
 
-import { LayoutActionTypes } from 'app/layout/ngrx/actions';
+import { LayoutTypes } from 'app/layout/actions/layout.actions';
 import { getCurrentUrl } from 'app/reducers';
 import {
   AttentionTrainingTypes,
@@ -37,7 +37,7 @@ import { DBService } from '../services/db.service';
 export class AttentionTrainingEffects {
   @Effect({ dispatch: false })
   fab$: Observable<boolean> = this.actions$
-    .ofType(LayoutActionTypes.FabClick)
+    .ofType(LayoutTypes.ClickFab)
     .pipe(
       withLatestFrom(this.store.select(getCurrentUrl)),
       filter(([action, url]) => url === '/attention-training'),

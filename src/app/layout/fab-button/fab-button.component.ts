@@ -2,15 +2,9 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { map, tap } from 'rxjs/operators';
 
-import { lastActivatedRouteData } from '@rxjs/index';
-import { FabClick } from '../ngrx/actions';
-
-interface FabConfig {
-  icon: string;
-  isVisible: boolean;
-}
+import { ClickFab } from '../actions/layout.actions';
+import { getShowFab, getFabIcon } from 'app/reducers';
 
 @Component({
   selector: 'tq-fab-button',
@@ -18,25 +12,21 @@ interface FabConfig {
   styleUrls: ['./fab-button.component.scss'],
 })
 export class FabButtonComponent implements OnInit {
-  fabConfig$: Observable<FabConfig>;
+  fabIcon$: Observable<string>;
+  showFab$: Observable<boolean>;
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private store: Store<any>,
-  ) {}
-
-  ngOnInit() {
-    this.fabConfig$ = this.router.events.pipe(
-      lastActivatedRouteData(this.activatedRoute),
-      map(({ fabIcon, hideFab }): FabConfig => ({
-        icon: fabIcon || 'favorite',
-        isVisible: !!!hideFab,
-      })),
-    );
+  ) {
+    this.showFab$ = this.store.select(getShowFab);
+    this.fabIcon$ = this.store.select(getFabIcon);
   }
 
+  ngOnInit() {}
+
   onFab() {
-    this.store.dispatch(new FabClick());
+    this.store.dispatch(new ClickFab());
   }
 }

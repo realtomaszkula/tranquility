@@ -8,7 +8,7 @@ import {
 import { environment } from '../../environments/environment';
 import { RouterStateUrl } from '../shared/utils';
 import * as fromRouter from '@ngrx/router-store';
-import * as fromLayout from '../layout/ngrx/reducer';
+import * as fromLayout from '../layout/reducers/layout.reducer';
 
 import { storeFreeze } from 'ngrx-store-freeze';
 
@@ -56,3 +56,6 @@ export const getShowSidenav = createSelector(
   getLayoutState,
   fromLayout.getShowSidenav,
 );
+
+export const getShowFab = createSelector(getLayoutState, fromLayout.getShowFab);
+export const getFabIcon = createSelector(getLayoutState, fromLayout.getFabIcon);

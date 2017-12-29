@@ -15,9 +15,6 @@ const routes: Routes = [
   {
     path: 'page2',
     component: Comp2Component,
-    data: {
-      hideFab: true,
-    },
   },
   { path: 'page3', component: Comp3Component },
   { path: 'page4', component: Comp4Component },
