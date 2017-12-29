@@ -15,6 +15,8 @@ import {
   catchError,
   tap,
   withLatestFrom,
+  first,
+  flatMap,
 } from 'rxjs/operators';
 
 import { LayoutTypes } from 'app/layout/actions/layout.actions';
@@ -32,6 +34,8 @@ import {
 } from '../actions/list.actions';
 import { AttentionTraining } from '../models/attention-training';
 import { DBService } from '../services/db.service';
+import { getTimerValue } from 'app/+attention-training/reducers';
+import { ResetTimer } from 'app/+attention-training/actions/timer.actions';
 
 @Injectable()
 export class AttentionTrainingEffects {
@@ -42,6 +46,25 @@ export class AttentionTrainingEffects {
       withLatestFrom(this.store.select(getCurrentUrl)),
       filter(([action, url]) => url === '/attention-training'),
       switchMap(() => this.router.navigateByUrl('/attention-training/new')),
+    );
+
+  @Effect()
+  save$: Observable<Action> = this.actions$
+    .ofType(LayoutTypes.ClickFabMini)
+    .pipe(
+      switchMap(() =>
+        this.store.select(getTimerValue).pipe(
+          first(),
+          flatMap(timerValue => [
+            new AddAttentionTraining({
+              trainingDate: new Date(),
+              soundChangeIntervalInSeconds: 40,
+              trainingDurationInSeconds: timerValue / 1000,
+            }),
+            new ResetTimer(),
+          ]),
+        ),
+      ),
     );
 
   @Effect()

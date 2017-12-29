@@ -1,3 +1,8 @@
+export enum AttentionTrainingType {
+  beginner = 'beginner',
+  advanced = 'advanced',
+}
+
 export enum AttentionTrainingKey {
   id = 'id',
   trainingDate = 'trainingDate',

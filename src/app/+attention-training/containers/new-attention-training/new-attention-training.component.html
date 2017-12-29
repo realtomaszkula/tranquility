@@ -1,4 +1,13 @@
 <main class="mat-h1" fxFlex fxLayout="column">
+  <div fxLayout="row">
+    <button mat-button fxFlex [color]="(isBeginnerTraining$ | async) ? 'primary' : ''" (click)="setBeginner()">
+      beginner
+    </button>
+    <button mat-button fxFlex [color]="(isAdvancedTraining$ | async) ? 'primary' : ''" (click)="setAdvanced()">
+      advanced
+    </button>
+  </div>
+
   <div fxFlex fxLayout="row" fxLayoutAlign="center center">
     <div>
       {{ timerValue$ | async }}

@@ -6,7 +6,6 @@ export enum TimerTypes {
   stop = '[Timer] stop',
   resume = '[Timer] resume',
   reset = '[Timer] reset',
-  save = '[Timer] save',
 }
 
 export class StartTimer implements Action {
@@ -29,14 +28,9 @@ export class ResetTimer implements Action {
   readonly type = TimerTypes.reset;
 }
 
-export class SaveTimer implements Action {
-  readonly type = TimerTypes.save;
-}
-
 export type TimerActions =
   | StartTimer
   | IncrementTimer
   | StopTimer
   | ResumeTimer
-  | ResetTimer
-  | SaveTimer;
+  | ResetTimer;

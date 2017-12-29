@@ -2,11 +2,13 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 import * as fromList from './list.reducer';
 import * as fromTimer from './timer.reducer';
+import * as fromTraining from './training.reducer';
 import * as fromRoot from 'app/reducers';
 
 export interface AttentionTrainingState {
   list: fromList.State;
   timer: fromTimer.State;
+  training: fromTraining.State;
 }
 
 export interface State extends fromRoot.State {
@@ -15,6 +17,7 @@ export interface State extends fromRoot.State {
 
 export const reducers = {
   list: fromList.reducer,
+  training: fromTraining.reducer,
   timer: fromTimer.reducer,
 };
 
@@ -69,4 +72,20 @@ export const getTimerIsRunning = createSelector(
 export const getTimerIsStopped = createSelector(
   getTimerState,
   fromTimer.getIsStopped,
+);
+
+/* Training selectors */
+export const getTrainingState = createSelector(
+  getAttentionTrainingState,
+  (state: AttentionTrainingState) => state.training,
+);
+
+export const getIsBeginnerTraining = createSelector(
+  getTrainingState,
+  fromTraining.getIsBeginnerTrainig,
+);
+
+export const getIsAdvancedTraining = createSelector(
+  getTrainingState,
+  fromTraining.getIsAdvancedTrainig,
 );

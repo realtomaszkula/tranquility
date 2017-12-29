@@ -4,6 +4,8 @@ import { Observable } from 'rxjs/Observable';
 
 import * as fromAttentionTraining from '../../reducers';
 import * as timer from '../../actions/timer.actions';
+import * as training from '../../actions/training.actions';
+import { AttentionTrainingType } from '../../models/attention-training';
 
 @Component({
   selector: 'tq-new-attention-training',
@@ -17,6 +19,9 @@ export class NewAttentionTrainingComponent implements OnInit {
   isRunning$: Observable<boolean>;
   timerValue$: Observable<number>;
 
+  isAdvancedTraining$: Observable<boolean>;
+  isBeginnerTraining$: Observable<boolean>;
+
   constructor(private store: Store<fromAttentionTraining.State>) {
     this.isInInitialState$ = this.store.select(
       fromAttentionTraining.getTimerIsInInitialState,
@@ -29,6 +34,12 @@ export class NewAttentionTrainingComponent implements OnInit {
     );
     this.timerValue$ = this.store.select(
       fromAttentionTraining.getTimerValueInSeconds,
+    );
+    this.isBeginnerTraining$ = this.store.select(
+      fromAttentionTraining.getIsBeginnerTraining,
+    );
+    this.isAdvancedTraining$ = this.store.select(
+      fromAttentionTraining.getIsAdvancedTraining,
     );
   }
 
@@ -48,5 +59,21 @@ export class NewAttentionTrainingComponent implements OnInit {
 
   onResume() {
     this.store.dispatch(new timer.ResumeTimer());
+  }
+
+  setBeginner() {
+    this.store.dispatch(
+      new training.SetTrainingType({
+        trainingType: AttentionTrainingType.beginner,
+      }),
+    );
+  }
+
+  setAdvanced() {
+    this.store.dispatch(
+      new training.SetTrainingType({
+        trainingType: AttentionTrainingType.advanced,
+      }),
+    );
   }
 }

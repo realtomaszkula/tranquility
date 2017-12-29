@@ -35,8 +35,7 @@ export function reducer(state = initialState, action: TimerActions): State {
     }
     case TimerTypes.reset: {
       return {
-        isRunning: false,
-        value: 0,
+        ...initialState,
       };
     }
 
