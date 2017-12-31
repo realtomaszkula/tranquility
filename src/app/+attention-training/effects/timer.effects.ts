@@ -45,9 +45,10 @@ export class TimerEffects {
       switchMap(() =>
         this.store
           .select(
-            fromAttentionTraining.getSoundChangeIntervalInSecondsForTrainingState,
+            fromAttentionTraining.getCurrentSoundChangeIntervalInSeconds,
           )
           .pipe(
+            first(),
             switchMap(soundChangeInterval =>
               interval(soundChangeInterval * 1000).pipe(
                 map(() => new AnnounceSoundChange()),

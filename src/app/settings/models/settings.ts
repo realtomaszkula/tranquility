@@ -1,10 +1,6 @@
 export interface AttentionTrainingSettings {
-  beginner: {
-    soundChangeIntervalInSeconds: number;
-  };
-  advanced: {
-    soundChangeIntervalInSeconds: number;
-  };
+  vibrateOn: boolean;
+  soundOn: boolean;
 }
 
 export interface AppSettings {

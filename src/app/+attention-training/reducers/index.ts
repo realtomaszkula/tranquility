@@ -94,27 +94,18 @@ export const getIsAdvancedTraining = createSelector(
 );
 
 /* Combined selectors */
-export const getSettingsForTrainingState = createSelector(
+export const getCurrentSoundChangeIntervalInSeconds = createSelector(
   getTrainingState,
   getSettingsState,
-  (training, settings) => {
+  (training, settings): number => {
     switch (training.trainingType) {
       case AttentionTrainingType.advanced: {
-        return {
-          ...settings.attentionTraining.advanced,
-        };
+        return 10;
       }
       case AttentionTrainingType.beginner:
       default: {
-        return {
-          ...settings.attentionTraining.beginner,
-        };
+        return 40;
       }
     }
   },
-);
-
-export const getSoundChangeIntervalInSecondsForTrainingState = createSelector(
-  getSettingsForTrainingState,
-  state => state.soundChangeIntervalInSeconds,
 );

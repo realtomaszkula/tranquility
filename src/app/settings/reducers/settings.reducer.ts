@@ -5,12 +5,8 @@ export type State = AppSettings;
 
 export const initialState: State = {
   attentionTraining: {
-    beginner: {
-      soundChangeIntervalInSeconds: 40,
-    },
-    advanced: {
-      soundChangeIntervalInSeconds: 10,
-    },
+    vibrateOn: true,
+    soundOn: true,
   },
 };
 
@@ -19,6 +15,42 @@ export function reducer(state = initialState, action: SettingsActions): State {
     case SettingsTypes.reset: {
       return {
         ...initialState,
+      };
+    }
+    case SettingsTypes.turnOnAttentionTrainingVibrate: {
+      return {
+        ...initialState,
+        attentionTraining: {
+          ...initialState.attentionTraining,
+          vibrateOn: true,
+        },
+      };
+    }
+    case SettingsTypes.turnOffAttentionTrainingVibrate: {
+      return {
+        ...initialState,
+        attentionTraining: {
+          ...initialState.attentionTraining,
+          vibrateOn: false,
+        },
+      };
+    }
+    case SettingsTypes.turnOnAttentionTrainingVibrate: {
+      return {
+        ...initialState,
+        attentionTraining: {
+          ...initialState.attentionTraining,
+          soundOn: true,
+        },
+      };
+    }
+    case SettingsTypes.turnOffAttentionTrainingVibrate: {
+      return {
+        ...initialState,
+        attentionTraining: {
+          ...initialState.attentionTraining,
+          soundOn: false,
+        },
       };
     }
     default: {

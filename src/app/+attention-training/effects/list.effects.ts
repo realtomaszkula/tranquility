@@ -57,9 +57,10 @@ export class AttentionTrainingEffects {
         combineLatest(
           this.store.select(fromAttentionTraining.getTimerValueInSeconds),
           this.store.select(
-            fromAttentionTraining.getSoundChangeIntervalInSecondsForTrainingState,
+            fromAttentionTraining.getCurrentSoundChangeIntervalInSeconds,
           ),
         ).pipe(
+          first(),
           flatMap(
             ([trainingDurationInSeconds, soundChangeIntervalInSeconds]) => [
               new AddAttentionTraining({
