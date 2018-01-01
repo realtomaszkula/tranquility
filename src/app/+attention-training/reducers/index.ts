@@ -24,7 +24,7 @@ export const reducers = {
   timer: fromTimer.reducer,
 };
 
-/* List selectors */
+// region List Selectors
 export const getAttentionTrainingState = createFeatureSelector<
   AttentionTrainingState
 >('attentionTraining');
@@ -45,8 +45,9 @@ export const getAttentionTrainingLoading = createSelector(
   getListState,
   fromList.getLoading,
 );
+// endregion
 
-/* Timer selectors */
+// region Timer Selectors
 export const getTimerState = createSelector(
   getAttentionTrainingState,
   (state: AttentionTrainingState) => state.timer,
@@ -76,8 +77,9 @@ export const getTimerIsStopped = createSelector(
   getTimerState,
   fromTimer.getIsStopped,
 );
+// endregion
 
-/* Training selectors */
+// region Training Selectors
 export const getTrainingState = createSelector(
   getAttentionTrainingState,
   (state: AttentionTrainingState) => state.training,
@@ -92,8 +94,9 @@ export const getIsAdvancedTraining = createSelector(
   getTrainingState,
   fromTraining.getIsAdvancedTrainig,
 );
+// endregion
 
-/* Combined selectors */
+// region Combined Selectors
 export const getCurrentSoundChangeIntervalInSeconds = createSelector(
   getTrainingState,
   getSettingsState,
@@ -109,3 +112,4 @@ export const getCurrentSoundChangeIntervalInSeconds = createSelector(
     }
   },
 );
+// endregion
