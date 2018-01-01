@@ -16,15 +16,6 @@ export abstract class IndexDB<T> {
 
   constructor() {}
 
-  getAll(): Promise<T[]> {
-    return this.dbPromise.then(db => {
-      return db
-        .transaction(this.storeName)
-        .objectStore(this.storeName)
-        .getAll();
-    });
-  }
-
   get(key: any): Promise<T> {
     return this.dbPromise.then(db => {
       return db
