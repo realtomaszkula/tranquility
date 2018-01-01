@@ -13,6 +13,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { metaReducers, reducers } from './reducers';
 import { CustomRouterStateSerializer } from './shared/utils';
 import { LayoutEffects } from './layout/effects/layout.effects';
+import { RouterEffects } from './router/effects/router.effects';
 
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
@@ -38,7 +39,7 @@ import { Comp4Component } from './comp4/comp4.component';
     StoreModule.forRoot(reducers, { metaReducers }),
     StoreRouterConnectingModule,
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    EffectsModule.forRoot([LayoutEffects]),
+    EffectsModule.forRoot([LayoutEffects, RouterEffects]),
   ],
   providers: [
     { provide: RouterStateSerializer, useClass: CustomRouterStateSerializer },

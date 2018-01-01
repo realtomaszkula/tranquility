@@ -10,6 +10,10 @@ export enum AttentionTrainingKey {
   trainingDurationInSeconds = 'trainingDurationIntervalInSeconds',
 }
 
+export interface AttentionTrainingFilters {
+  lastNumberOfDays: number;
+}
+
 export interface AttentionTraining {
   id: number;
   trainingDate: Date;

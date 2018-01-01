@@ -18,6 +18,7 @@ import { AttentionTrainingEffects } from './effects/list.effects';
 import { TimerEffects } from './effects/timer.effects';
 import { TrainingEffects } from './effects/training.effects';
 
+import { LastNumberOfDaysFilterModule } from 'app/components/last-number-of-days-filter/last-number-of-days-filter.module';
 import { DBService } from './services/db.service';
 import { VibrationService } from './services/vibration.service';
 import { AttentionTrainingRoutingModule } from './attention-training-routing.module';
@@ -33,10 +34,10 @@ import { NewAttentionTrainingComponent } from './containers/new-attention-traini
     AttentionTrainingRoutingModule,
     MatButtonModule,
     MatIconModule,
-    MatMenuModule,
     MatCardModule,
     MatListModule,
     MatProgressBarModule,
+    LastNumberOfDaysFilterModule,
     StoreModule.forFeature('attentionTraining', reducers),
     EffectsModule.forFeature([
       AttentionTrainingEffects,

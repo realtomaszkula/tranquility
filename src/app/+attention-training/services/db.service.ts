@@ -20,26 +20,13 @@ export class DBService extends IndexDB<AttentionTraining> {
   readonly dbName = 'tranquility';
   readonly storeName = 'attention_training';
 
-  getAll({ filters, afterCursor }: GetAllParams): Promise<AttentionTraining[]> {
-    const range = IDBKeyRange.lowerBound(daysAgo(filters.lastNumberOfDays));
-
-    const results = [];
-    return this.dbPromise
-      .then(db => {
-        const tx = db.transaction(this.storeName);
-        const store = tx.objectStore(this.storeName);
-        const index = store.index(AttentionTrainingKey.trainingDate);
-        return index.openCursor(range);
-      })
-      .then(function showRange(cursor: Cursor) {
-        if (!cursor) {
-          return;
-        }
-
-        results.push(cursor.value);
-        return cursor.continue().then(showRange);
-      })
-      .then(() => results);
+  getIndex({
+    filters,
+    afterCursor,
+  }: GetAllParams): Promise<AttentionTraining[]> {
+    return filters.lastNumberOfDays
+      ? this.filterByDate(filters.lastNumberOfDays)
+      : this.getAll();
   }
 
   upgradeCallback = (db: UpgradeDB) => {
@@ -59,4 +46,26 @@ export class DBService extends IndexDB<AttentionTraining> {
         );
     }
   };
+
+  private filterByDate(lastNumberOfDays): Promise<AttentionTraining[]> {
+    const range = IDBKeyRange.lowerBound(daysAgo(lastNumberOfDays));
+
+    const results = [];
+    return this.dbPromise
+      .then(db => {
+        const tx = db.transaction(this.storeName);
+        const store = tx.objectStore(this.storeName);
+        const index = store.index(AttentionTrainingKey.trainingDate);
+        return index.openCursor(range);
+      })
+      .then(function showRange(cursor: Cursor) {
+        if (!cursor) {
+          return;
+        }
+
+        results.push(cursor.value);
+        return cursor.continue().then(showRange);
+      })
+      .then(() => results);
+  }
 }

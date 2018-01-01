@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
 import { AttentionTraining } from '../models/attention-training';
+import { GetAllParams } from 'app/+attention-training/services/db.service';
 
 export enum AttentionTrainingTypes {
   ClearAttentionTrainings = '[AttentionTraining] Clear',
@@ -19,6 +20,8 @@ export enum AttentionTrainingTypes {
 
 export class LoadAttentionTrainings implements Action {
   readonly type = AttentionTrainingTypes.LoadAttentionTrainings;
+
+  constructor(public payload: GetAllParams) {}
 }
 
 export class LoadAttentionTrainingsComplete implements Action {

@@ -36,7 +36,7 @@ export function reducer(
 
     case AttentionTrainingTypes.LoadAttentionTrainingsComplete: {
       return {
-        ...adapter.addMany(action.payload, state),
+        ...adapter.addAll(action.payload, state),
         loading: false,
       };
     }

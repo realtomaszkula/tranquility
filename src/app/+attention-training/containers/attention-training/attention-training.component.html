@@ -1,2 +1,5 @@
 <mat-progress-bar *ngIf="loading$ | async" mode="indeterminate" color="primary"></mat-progress-bar>
+<div fxLayout="row" fxLayoutAlign="end center">
+  <tq-last-number-of-days-filter></tq-last-number-of-days-filter>
+</div>
 <tq-attention-training-card *ngFor="let item of list$ | async" [attentionTraining]="item" (delete)="delete(item)"></tq-attention-training-card>

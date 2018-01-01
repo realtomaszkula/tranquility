@@ -7,6 +7,8 @@ import { AttentionTraining } from '../../models/attention-training';
 import * as fromAttentionTraining from '../../reducers';
 import * as list from '../../actions/list.actions';
 
+import * as moment from 'moment';
+
 @Component({
   selector: 'tq-attention-training',
   templateUrl: './attention-training.component.html',
@@ -25,9 +27,7 @@ export class AttentionTrainingComponent implements OnInit {
     );
   }
 
-  ngOnInit() {
-    this.store.dispatch(new list.LoadAttentionTrainings());
-  }
+  ngOnInit() {}
 
   delete(payload: AttentionTraining) {
     this.store.dispatch(new list.DeleteAttentionTraining(payload));

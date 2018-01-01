@@ -2,7 +2,11 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Effect, Actions } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
-import { RouterAction } from '@ngrx/router-store';
+import {
+  RouterAction,
+  ROUTER_NAVIGATION,
+  RouterNavigationAction,
+} from '@ngrx/router-store';
 import { Observable } from 'rxjs/Observable';
 import { empty } from 'rxjs/observable/empty';
 import { fromPromise } from 'rxjs/observable/fromPromise';
@@ -33,20 +37,30 @@ import {
   DeleteAttentionTraining,
   DeleteAttentionTrainingComplete,
   DeleteAttentionTrainingError,
+  LoadAttentionTrainings,
 } from '../actions/list.actions';
 import { DBService } from '../services/db.service';
 import { AttentionTraining } from '../models/attention-training';
 import { ResetTimer } from '../actions/timer.actions';
+import { RouterStateUrl } from 'app/shared/utils';
+import { queryParamsToFilters } from '../helpers/query-params';
+import { isIndexPage } from '../helpers/navigation';
 
 @Injectable()
 export class AttentionTrainingEffects {
   @Effect({ dispatch: false })
-  fab$: Observable<boolean> = this.actions$
+  fab$: Observable<any> = this.actions$
     .ofType(LayoutTypes.ClickFab)
     .pipe(
-      withLatestFrom(this.store.select(fromRoot.getCurrentUrl)),
-      filter(([action, url]) => url === '/attention-training'),
-      switchMap(() => this.router.navigateByUrl('/attention-training/new')),
+      switchMap(() =>
+        this.store
+          .select(fromRoot.getCurrentUrl)
+          .pipe(
+            first(),
+            filter(isIndexPage),
+            tap(() => this.router.navigateByUrl('/attention-training/new')),
+          ),
+      ),
     );
 
   @Effect()
@@ -76,11 +90,25 @@ export class AttentionTrainingEffects {
     );
 
   @Effect()
+  filters$: Observable<any> = this.actions$.ofType(ROUTER_NAVIGATION).pipe(
+    map((action: RouterNavigationAction<RouterStateUrl>) => action.payload),
+    filter(payload => isIndexPage(payload.event.urlAfterRedirects)),
+    map(payload => payload.routerState.queryParams),
+    map(queryParamsToFilters),
+    flatMap(filters => [
+      new LoadAttentionTrainings({
+        filters,
+        afterCursor: null,
+      }),
+    ]),
+  );
+
+  @Effect()
   load$: Observable<Action> = this.actions$
     .ofType(AttentionTrainingTypes.LoadAttentionTrainings)
     .pipe(
-      switchMap(() =>
-        fromPromise(this.db.getAll()).pipe(
+      switchMap(({ payload }: LoadAttentionTrainings) =>
+        fromPromise(this.db.getIndex(payload)).pipe(
           map(
             attentionTrainings =>
               new LoadAttentionTrainingsComplete(attentionTrainings),
